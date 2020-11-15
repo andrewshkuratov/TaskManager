@@ -21,7 +21,7 @@ public class ArrayTaskList {
     public boolean remove(Task task) {
         int index = -1;
         for (int i = 0; i < size(); i++) {
-            if (tasks[i].getTitle().equals(task.getTitle())) {
+            if (tasks[i].equals(task)) {
                 index = i;
                 break;
             }
@@ -53,9 +53,9 @@ public class ArrayTaskList {
         return tasks.length;
     }
 
-    public Task getTask(int index) {
+    public Task getTask(int index) throws IndexOutOfBoundsException {
         if(index < 0 || index > size()) {
-            System.out.println("Index out of range");
+            throw new IndexOutOfBoundsException();
         }
         return tasks[index];
     }

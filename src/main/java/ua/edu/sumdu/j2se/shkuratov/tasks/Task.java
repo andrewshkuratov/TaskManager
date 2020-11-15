@@ -1,5 +1,7 @@
 package ua.edu.sumdu.j2se.shkuratov.tasks;
 
+import java.util.Objects;
+
 public class Task {
     private String title;
 
@@ -11,9 +13,9 @@ public class Task {
 
     private boolean active;
 
-    public Task(final String title, final int time) {
+    public Task(final String title, final int time) throws IllegalArgumentException {
         if (time <= 0) {
-            System.out.println("illegal value");
+            throw new IllegalArgumentException("Values less then 0");
         } else {
             this.title = title;
             this.time = time;
@@ -22,9 +24,9 @@ public class Task {
     }
 
     public Task(final String title, final int start,
-                final int end, final int interval) {
-        if (start < 0 || end < 0 || interval < 0) {
-            System.out.println("illegal value");
+                final int end, final int interval) throws IllegalArgumentException {
+        if (start < 0 || end < 0 || interval <= 0) {
+            throw new IllegalArgumentException("Values less then 0");
         } else {
             this.title = title;
             this.start = start;
@@ -127,5 +129,20 @@ public class Task {
             }
         }
         return -1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Task task = (Task) o;
+        return Objects.equals(title, task.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, time, start, end, interval, active);
     }
 }
