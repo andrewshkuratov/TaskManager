@@ -5,7 +5,7 @@ public class LinkedTaskList {
     private ListTask last;
     private int size = 0;
 
-    private static class ListTask {
+    public class ListTask {
         Task element;
         ListTask next;
         ListTask previous;
