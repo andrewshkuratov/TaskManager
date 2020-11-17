@@ -80,25 +80,6 @@ public class LinkedTaskList extends AbstractTaskList {
         return null;
     }
 
-    public LinkedTaskList incoming(int from, int to)
-            throws IllegalArgumentException {
-        if (from < 0 || to < 0 || from > to) {
-            throw new IllegalArgumentException();
-        }
-        LinkedTaskList t = new LinkedTaskList();
-        ListTask item = first;
-        for (int i = 0; i < size; i++) {
-            if (item.element.nextTimeAfter(from) < to &&
-                    item.element.nextTimeAfter(from) != -1) {
-                t.add(item.element);
-                item = item.next;
-            } else {
-                item = item.next;
-            }
-        }
-        return t;
-    }
-
     public void print() {
         ListTask listTask = first;
         for (int i = 0; i < size; i++) {

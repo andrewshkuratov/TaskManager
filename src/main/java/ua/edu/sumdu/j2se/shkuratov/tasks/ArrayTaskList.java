@@ -59,15 +59,4 @@ public class ArrayTaskList extends AbstractTaskList {
         }
         return tasks[index];
     }
-
-    public ArrayTaskList incoming(int from, int to) {
-        ArrayTaskList t = new ArrayTaskList();
-        for (int i = 0; i < size(); i++) {
-            if (tasks[i].nextTimeAfter(from) < to &&
-                    tasks[i].nextTimeAfter(from) != -1) {
-                t.add(tasks[i]);
-            }
-        }
-        return t;
-    }
 }
