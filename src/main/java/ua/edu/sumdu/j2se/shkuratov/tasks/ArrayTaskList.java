@@ -53,7 +53,8 @@ public class ArrayTaskList {
         return tasks.length;
     }
 
-    public Task getTask(int index) throws IndexOutOfBoundsException {
+    public Task getTask(int index)
+            throws IndexOutOfBoundsException {
         if(index < 0 || index > size()) {
             throw new IndexOutOfBoundsException();
         }
@@ -63,16 +64,9 @@ public class ArrayTaskList {
     public ArrayTaskList incoming(int from, int to) {
         ArrayTaskList t = new ArrayTaskList();
         for (int i = 0; i < size(); i++) {
-            if (tasks[i].isActive()) {
-                if (tasks[i].isRepeated()) {
-                    if (tasks[i].nextTimeAfter(from) < to && tasks[i].nextTimeAfter(to) > from) {
-                        t.add(tasks[i]);
-                    }
-                } else {
-                    if (from < tasks[i].getTime() && to > tasks[i].getTime()) {
-                        t.add(tasks[i]);
-                    }
-                }
+            if (tasks[i].nextTimeAfter(from) < to &&
+                    tasks[i].nextTimeAfter(from) != -1) {
+                t.add(tasks[i]);
             }
         }
         return t;

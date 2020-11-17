@@ -30,16 +30,16 @@ public class LinkedTaskList {
         size++;
     }
 
-    public boolean remove(Task element) {
+    public boolean remove(Task task) {
         if (size == 0) {
             return false;
-        } else if (first.element.equals(element)) {
+        } else if (first.element.equals(task)) {
             first = first.next;
             size--;
             return true;
         }
 
-        ListTask listTask = findBeforeElement(element);
+        ListTask listTask = findBeforeElement(task);
 
         if (listTask != null) {
             if (listTask.next.next != null) {
@@ -80,25 +80,21 @@ public class LinkedTaskList {
         return null;
     }
 
-    public LinkedTaskList incoming(int from, int to) throws IllegalArgumentException {
+    public LinkedTaskList incoming(int from, int to)
+            throws IllegalArgumentException {
         if (from < 0 || to < 0 || from > to) {
             throw new IllegalArgumentException();
         }
         LinkedTaskList t = new LinkedTaskList();
         ListTask item = first;
+        System.out.println(item.element.getTitle());
         for (int i = 0; i < size; i++) {
-            if (item.element.isActive()) {
-                if (item.element.isRepeated()) {
-                    if (item.element.nextTimeAfter(from) < to && item.element.nextTimeAfter(to) > from) {
-                        t.add(item.element);
-                        item = item.next;
-                    }
-                } else {
-                    if (from < item.element.getTime() && to > item.element.getTime()) {
-                        t.add(item.element);
-                        item = item.next;
-                    }
-                }
+            if (item.element.nextTimeAfter(from) < to &&
+                    item.element.nextTimeAfter(from) != -1) {
+                t.add(item.element);
+                item = item.next;
+            } else {
+                item = item.next;
             }
         }
         return t;

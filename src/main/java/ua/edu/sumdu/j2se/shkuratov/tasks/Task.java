@@ -140,9 +140,4 @@ public class Task {
         Task task = (Task) o;
         return Objects.equals(title, task.title);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(title, time, start, end, interval, active);
-    }
 }
