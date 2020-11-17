@@ -1,6 +1,6 @@
 package ua.edu.sumdu.j2se.shkuratov.tasks;
 
-public class LinkedTaskList {
+public class LinkedTaskList extends AbstractTaskList {
     private ListTask first;
     private ListTask last;
     private int size = 0;
@@ -87,7 +87,6 @@ public class LinkedTaskList {
         }
         LinkedTaskList t = new LinkedTaskList();
         ListTask item = first;
-        System.out.println(item.element.getTitle());
         for (int i = 0; i < size; i++) {
             if (item.element.nextTimeAfter(from) < to &&
                     item.element.nextTimeAfter(from) != -1) {

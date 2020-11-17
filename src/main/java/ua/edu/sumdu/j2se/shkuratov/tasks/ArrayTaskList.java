@@ -1,6 +1,6 @@
 package ua.edu.sumdu.j2se.shkuratov.tasks;
 
-public class ArrayTaskList {
+public class ArrayTaskList extends AbstractTaskList {
     private Task[] tasks = new Task[100];
 
     public void add(Task task) {
@@ -29,7 +29,6 @@ public class ArrayTaskList {
 
         if (index == -1)
             return false;
-
 
         Task[] t = new Task[tasks.length];
         for (int j = 0, k = 0; j < size(); j++) {
