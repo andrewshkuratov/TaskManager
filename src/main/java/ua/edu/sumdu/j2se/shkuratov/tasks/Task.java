@@ -133,11 +133,19 @@ public class Task {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(title, task.title);
+        return time == task.time &&
+                start == task.start &&
+                end == task.end &&
+                interval == task.interval &&
+                active == task.active &&
+                Objects.equals(title, task.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, time, start, end, interval, active);
     }
 }

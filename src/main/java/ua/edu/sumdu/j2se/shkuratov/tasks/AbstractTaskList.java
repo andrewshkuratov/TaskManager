@@ -13,9 +13,11 @@ public abstract class AbstractTaskList {
         }
         AbstractTaskList abstractTaskList;
         if (this.getClass().getSimpleName().equals("ArrayTaskList")) {
-            abstractTaskList = new ArrayTaskList();
+            abstractTaskList = TaskListFactory.
+                    createTaskList(ListTypes.types.ARRAY);
         } else {
-            abstractTaskList = new LinkedTaskList();
+            abstractTaskList = TaskListFactory.
+                    createTaskList(ListTypes.types.LINKED);
         }
 
         for (int i = 0; i < this.size(); i++) {
