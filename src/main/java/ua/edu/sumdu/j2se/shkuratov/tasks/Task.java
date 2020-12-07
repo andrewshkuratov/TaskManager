@@ -14,7 +14,7 @@ public class Task {
     private boolean active;
 
     public Task(final String title, final int time) throws IllegalArgumentException {
-        if (time <= 0) {
+        if (time < 0) {
             throw new IllegalArgumentException("Values less then 0");
         } else {
             this.title = title;
@@ -145,7 +145,24 @@ public class Task {
     }
 
     @Override
+    public String toString() {
+        return "Task{" +
+                "title='" + title + '\'' +
+                ", time=" + time +
+                ", start=" + start +
+                ", end=" + end +
+                ", interval=" + interval +
+                ", active=" + active +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(title, time, start, end, interval, active);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
