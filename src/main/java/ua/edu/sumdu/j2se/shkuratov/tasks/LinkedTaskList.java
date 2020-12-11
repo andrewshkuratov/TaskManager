@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class LinkedTaskList extends AbstractTaskList {
     private ListTask first;
@@ -74,6 +75,23 @@ public class LinkedTaskList extends AbstractTaskList {
         return result.element;
     }
 
+    @Override
+    public Stream<Task> getStream() {
+        return Stream.of(this.toArray());
+    }
+
+    private Task[] toArray() {
+        Task[] result = new Task[size];
+        int i = 0;
+        ListTask last = first;
+        while (last.next != null) {
+            result[i] = last.element;
+            i++;
+            last = last.next;
+        }
+        return result;
+    }
+
     private ListTask findBeforeElement(Task value) {
         ListTask listTask = first;
         while (listTask.next != null) {
@@ -136,7 +154,7 @@ public class LinkedTaskList extends AbstractTaskList {
 
     @Override
     public @NotNull Iterator<Task> iterator() {
-        Iterator<Task> iterator = new Iterator<Task>() {
+        return new Iterator<Task>() {
             private int lastRet = -1; // index of last element returned; -1 if no such
             private int currentIndex = 0;
 
@@ -162,6 +180,5 @@ public class LinkedTaskList extends AbstractTaskList {
                 }
             }
         };
-        return iterator;
     }
 }

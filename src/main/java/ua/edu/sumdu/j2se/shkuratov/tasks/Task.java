@@ -20,6 +20,7 @@ public class Task {
             this.title = title;
             this.time = time;
             active = false;
+            interval = 0;
         }
     }
 
@@ -40,7 +41,7 @@ public class Task {
         return title;
     }
 
-    public void setTitle(final String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -48,7 +49,7 @@ public class Task {
         return active;
     }
 
-    public void setActive(final boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 
@@ -59,7 +60,7 @@ public class Task {
         return time;
     }
 
-    public void setTime(final int time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
@@ -95,34 +96,30 @@ public class Task {
         return time == 0;
     }
 
-    public int nextTimeAfter(final int current) {
+    public int nextTimeAfter(int current) {
         if (current < 0) {
             System.out.println("illegalValue");
         } else {
+            if (!isActive()) {
+                return -1;
+            }
+
             if (isRepeated()) {
-                if (isActive()) {
-                    if (start > current) {
-                        return start;
-                    } else if (start <= current && current <= end) {
-                        int i = (end - start) / interval;
-                        for (int j = 0; j < i; j++) {
-                            if ((start + j * interval) > current) {
-                                return start + j * interval;
-                            }
-                        }
-                    } else {
-                        return -1;
-                    }
-                } else {
+                if (start > current) {
+                    return start;
+                } else if(end < current) {
                     return -1;
+                } else {
+                    int i = (end - start) / interval;
+                    for (int j = 0; j < i; j++) {
+                        if ((start + j * interval) > current) {
+                            return start + j * interval;
+                        }
+                    }
                 }
             } else {
-                if (isActive()) {
-                    if (current < time) {
-                        return time;
-                    } else {
-                        return -1;
-                    }
+                if (current < time) {
+                    return time;
                 } else {
                     return -1;
                 }

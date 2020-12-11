@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class ArrayTaskList extends AbstractTaskList {
     private Task[] tasks = new Task[100];
@@ -67,6 +68,19 @@ public class ArrayTaskList extends AbstractTaskList {
     }
 
     @Override
+    public Stream<Task> getStream() {
+        return Stream.of(this.toArray());
+    }
+
+    private Task[] toArray() {
+        Task[] tasks1 = new Task[size()];
+        for (int i = 0; i < size(); i++) {
+            tasks1[i] = tasks[i];
+        }
+        return tasks1;
+    }
+
+    @Override
     public String toString() {
         StringBuilder data = new StringBuilder();
         for (int i = 0; i < size(); i++) {
@@ -109,7 +123,7 @@ public class ArrayTaskList extends AbstractTaskList {
 
     @Override
     public @NotNull Iterator<Task> iterator() {
-        Iterator<Task> iterator = new Iterator<Task>() {
+        return new Iterator<Task>() {
             private int lastRet = -1; // index of last element returned; -1 if no such
             private int currentIndex = 0;
 
@@ -134,6 +148,5 @@ public class ArrayTaskList extends AbstractTaskList {
                 }
             }
         };
-        return iterator;
     }
 }
