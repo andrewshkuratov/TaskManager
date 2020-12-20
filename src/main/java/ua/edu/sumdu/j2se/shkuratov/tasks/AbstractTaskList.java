@@ -1,5 +1,6 @@
 package ua.edu.sumdu.j2se.shkuratov.tasks;
 
+import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 public abstract class AbstractTaskList implements Iterable<Task> {
@@ -10,9 +11,9 @@ public abstract class AbstractTaskList implements Iterable<Task> {
 
     public abstract Stream<Task> getStream();
 
-    public final AbstractTaskList incoming(int from, int to)
-            throws IllegalArgumentException{
-        if (from < 0 || to < 0 || from > to) {
+    public final AbstractTaskList incoming(LocalDateTime from, LocalDateTime to)
+            throws IllegalArgumentException {
+        if (from == null || to == null || from.isAfter(to)) {
             throw new IllegalArgumentException();
         }
 
@@ -26,19 +27,11 @@ public abstract class AbstractTaskList implements Iterable<Task> {
                     createTaskList(ListTypes.types.LINKED);
         }
 
-        //Doesn`t work
-//        getStream()
-//                .filter(x ->
-//                        x.nextTimeAfter(from) < to &&
-//                        x.nextTimeAfter(from) != 1)
-//                .forEach(abstractTaskList::add);
-
-        for (int i = 0; i < this.size(); i++) {
-            if (getTask(i).nextTimeAfter(from) < to &&
-                    getTask(i).nextTimeAfter(from) != -1) {
-                abstractTaskList.add(getTask(i));
-            }
-        }
+        getStream()
+                .filter(x ->
+                        x.nextTimeAfter(from).isBefore(to) &&
+                        x.nextTimeAfter(from) != null)
+                .forEach(abstractTaskList::add);
         return abstractTaskList;
     }
 }

@@ -1,20 +1,22 @@
 package ua.edu.sumdu.j2se.shkuratov.tasks;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
     private String title;
 
-    private int time;
+    private LocalDateTime time;
 
-    private int start;
-    private int end;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private int interval;
 
     private boolean active;
 
-    public Task(final String title, final int time) throws IllegalArgumentException {
-        if (time < 0) {
+    public Task(String title, LocalDateTime time)
+            throws IllegalArgumentException {
+        if (time == null) {
             throw new IllegalArgumentException("Values less then 0");
         } else {
             this.title = title;
@@ -24,9 +26,9 @@ public class Task {
         }
     }
 
-    public Task(final String title, final int start,
-                final int end, final int interval) throws IllegalArgumentException {
-        if (start < 0 || end < 0 || interval <= 0) {
+    public Task(String title, LocalDateTime start,
+                LocalDateTime end, int interval) throws IllegalArgumentException {
+        if (start == null || end == null || interval <= 0) {
             throw new IllegalArgumentException("Values less then 0");
         } else {
             this.title = title;
@@ -53,25 +55,25 @@ public class Task {
         this.active = active;
     }
 
-    public int getTime() {
+    public LocalDateTime getTime() {
         if (isRepeated()) {
             return start;
         }
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
-    public int getStartTime() {
+    public LocalDateTime getStartTime() {
         if (isRepeated()) {
             return start;
         }
         return time;
     }
 
-    public int getEndTime() {
+    public LocalDateTime getEndTime() {
         if (isRepeated()) {
             return end;
         }
@@ -85,47 +87,48 @@ public class Task {
         return 0;
     }
 
-    public void setTime(final int start, final int end, final int interval) {
+    public void setTime(LocalDateTime start, LocalDateTime end, int interval) {
         this.start = start;
+        this.time = start;
         this.end = end;
         this.interval = interval;
-        time = 0;
     }
 
     public boolean isRepeated() {
-        return time == 0;
+        return interval > 0;
     }
 
-    public int nextTimeAfter(int current) {
-        if (current < 0) {
+    public LocalDateTime nextTimeAfter(LocalDateTime current) {
+        if (current == null) {
             System.out.println("illegalValue");
         } else {
             if (!isActive()) {
-                return -1;
+                return null;
             }
 
             if (isRepeated()) {
-                if (start > current) {
+                if (start.isAfter(current)) {
                     return start;
-                } else if(end < current) {
-                    return -1;
+                } else if(end.isBefore(current)) {
+                    return null;
                 } else {
-                    int i = (end - start) / interval;
-                    for (int j = 0; j < i; j++) {
-                        if ((start + j * interval) > current) {
-                            return start + j * interval;
+                    LocalDateTime temp = start;
+                    while (temp.isBefore(end) || temp.isEqual(end)) {
+                        if (current.isBefore(temp)) {
+                            return temp;
                         }
+                        temp = temp.plusSeconds(interval);
                     }
                 }
             } else {
-                if (current < time) {
+                if (time.isAfter(current)) {
                     return time;
                 } else {
-                    return -1;
+                    return null;
                 }
             }
         }
-        return -1;
+        return null;
     }
 
     @Override
