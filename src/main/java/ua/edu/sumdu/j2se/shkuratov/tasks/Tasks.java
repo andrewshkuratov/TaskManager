@@ -1,12 +1,13 @@
 package ua.edu.sumdu.j2se.shkuratov.tasks;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class Tasks {
+public class Tasks implements Serializable {
     public static Iterable<Task> incoming(Iterable<Task> tasks,
                                           LocalDateTime start,
                                           LocalDateTime end) {

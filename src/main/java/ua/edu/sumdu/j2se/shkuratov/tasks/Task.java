@@ -1,9 +1,10 @@
 package ua.edu.sumdu.j2se.shkuratov.tasks;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Task {
+public class Task implements Serializable {
     private String title;
 
     private LocalDateTime time;
