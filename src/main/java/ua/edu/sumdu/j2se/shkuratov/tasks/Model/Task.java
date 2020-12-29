@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.shkuratov.tasks;
+package ua.edu.sumdu.j2se.shkuratov.tasks.Model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -147,13 +147,19 @@ public class Task implements Serializable {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "title='" + title + '\'' +
-                ", time=" + time +
-                ", start=" + start +
-                ", end=" + end +
-                ", interval=" + interval +
-                ", active=" + active +
+        if (isRepeated()) {
+            return "Task{" +
+                    " title='" + title + "', \n" +
+                    "   start=" + start + ", \n" +
+                    "   end=" + end + ", \n" +
+                    "   interval=" + interval + ", \n" +
+                    "   active=" + active + ", \n" +
+                    '}';
+        }
+        return "Task{ " +
+                " title='" + title + "', \n" +
+                "   time=" + time + ", \n" +
+                "   active=" + active +
                 '}';
     }
 

@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.shkuratov.tasks;
+package ua.edu.sumdu.j2se.shkuratov.tasks.Model;
 
 import com.google.gson.Gson;
 
@@ -92,6 +92,7 @@ public class TaskIO {
     public static void writeText(AbstractTaskList tasks, File file) throws IOException {
         String json = new Gson().toJson(tasks);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write("");
             writer.write(json);
             writer.flush();
         }

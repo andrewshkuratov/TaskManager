@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.shkuratov.tasks;
+package ua.edu.sumdu.j2se.shkuratov.tasks.Model;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -1,8 +1,7 @@
-package ua.edu.sumdu.j2se.shkuratov.tasks;
+package ua.edu.sumdu.j2se.shkuratov.tasks.Model;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -48,6 +47,20 @@ public class ArrayTaskList extends AbstractTaskList {
         return true;
     }
 
+    public boolean remove(int index) {
+        if (index <= 0 || index > size()) {
+            return false;
+        }
+        index--;
+        Task[] t = new Task[tasks.length];
+        for (int j = 0, k = 0; j < size(); j++) {
+            if (index != j)
+                t[k++] = tasks[j];
+        }
+        tasks = t;
+        return true;
+    }
+
     public int size() {
         if (tasks[0] == null)  {
             return 0;
@@ -65,6 +78,13 @@ public class ArrayTaskList extends AbstractTaskList {
             throw new IndexOutOfBoundsException();
         }
         return tasks[index];
+    }
+
+    public void changeTask(int index, Task task) throws IndexOutOfBoundsException {
+        if(index < 0 || index > size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        tasks[index] = task;
     }
 
     @Override
