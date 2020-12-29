@@ -1,31 +1,35 @@
-package ua.edu.sumdu.j2se.shkuratov.tasks;
+package ua.edu.sumdu.j2se.shkuratov.tasks.Model;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Task {
+public class Task implements Serializable {
     private String title;
 
-    private int time;
+    private LocalDateTime time;
 
-    private int start;
-    private int end;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private int interval;
 
     private boolean active;
 
-    public Task(final String title, final int time) throws IllegalArgumentException {
-        if (time < 0) {
+    public Task(String title, LocalDateTime time)
+            throws IllegalArgumentException {
+        if (time == null) {
             throw new IllegalArgumentException("Values less then 0");
         } else {
             this.title = title;
             this.time = time;
             active = false;
+            interval = 0;
         }
     }
 
-    public Task(final String title, final int start,
-                final int end, final int interval) throws IllegalArgumentException {
-        if (start < 0 || end < 0 || interval <= 0) {
+    public Task(String title, LocalDateTime start,
+                LocalDateTime end, int interval) throws IllegalArgumentException {
+        if (start == null || end == null || interval <= 0) {
             throw new IllegalArgumentException("Values less then 0");
         } else {
             this.title = title;
@@ -40,7 +44,7 @@ public class Task {
         return title;
     }
 
-    public void setTitle(final String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -48,29 +52,29 @@ public class Task {
         return active;
     }
 
-    public void setActive(final boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 
-    public int getTime() {
+    public LocalDateTime getTime() {
         if (isRepeated()) {
             return start;
         }
         return time;
     }
 
-    public void setTime(final int time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
-    public int getStartTime() {
+    public LocalDateTime getStartTime() {
         if (isRepeated()) {
             return start;
         }
         return time;
     }
 
-    public int getEndTime() {
+    public LocalDateTime getEndTime() {
         if (isRepeated()) {
             return end;
         }
@@ -84,51 +88,48 @@ public class Task {
         return 0;
     }
 
-    public void setTime(final int start, final int end, final int interval) {
+    public void setTime(LocalDateTime start, LocalDateTime end, int interval) {
         this.start = start;
+        this.time = start;
         this.end = end;
         this.interval = interval;
-        time = 0;
     }
 
     public boolean isRepeated() {
-        return time == 0;
+        return interval > 0;
     }
 
-    public int nextTimeAfter(final int current) {
-        if (current < 0) {
+    public LocalDateTime nextTimeAfter(LocalDateTime current) {
+        if (current == null) {
             System.out.println("illegalValue");
         } else {
+            if (!isActive()) {
+                return null;
+            }
+
             if (isRepeated()) {
-                if (isActive()) {
-                    if (start > current) {
-                        return start;
-                    } else if (start <= current && current <= end) {
-                        int i = (end - start) / interval;
-                        for (int j = 0; j < i; j++) {
-                            if ((start + j * interval) > current) {
-                                return start + j * interval;
-                            }
-                        }
-                    } else {
-                        return -1;
-                    }
+                if (start.isAfter(current)) {
+                    return start;
+                } else if(end.isBefore(current)) {
+                    return null;
                 } else {
-                    return -1;
+                    LocalDateTime temp = start;
+                    while (temp.isBefore(end) || temp.isEqual(end)) {
+                        if (current.isBefore(temp)) {
+                            return temp;
+                        }
+                        temp = temp.plusSeconds(interval);
+                    }
                 }
             } else {
-                if (isActive()) {
-                    if (current < time) {
-                        return time;
-                    } else {
-                        return -1;
-                    }
+                if (time.isAfter(current)) {
+                    return time;
                 } else {
-                    return -1;
+                    return null;
                 }
             }
         }
-        return -1;
+        return null;
     }
 
     @Override
@@ -146,13 +147,19 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "title='" + title + '\'' +
-                ", time=" + time +
-                ", start=" + start +
-                ", end=" + end +
-                ", interval=" + interval +
-                ", active=" + active +
+        if (isRepeated()) {
+            return "Task{" +
+                    " title='" + title + "', \n" +
+                    "   start=" + start + ", \n" +
+                    "   end=" + end + ", \n" +
+                    "   interval=" + interval + ", \n" +
+                    "   active=" + active + ", \n" +
+                    '}';
+        }
+        return "Task{ " +
+                " title='" + title + "', \n" +
+                "   time=" + time + ", \n" +
+                "   active=" + active +
                 '}';
     }
 
