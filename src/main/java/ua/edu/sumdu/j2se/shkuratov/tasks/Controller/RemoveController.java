@@ -18,7 +18,7 @@ public class RemoveController {
         TaskIO.readText(arrayTaskList, new File(src));
         removeAtIndex(arrayTaskList);
         TaskIO.writeText(arrayTaskList, new File(src));
-        logger.log(Level.INFO, "Task removed");
+//        logger.log(Level.INFO, "Task removed");
     }
 
     private void removeAtIndex(ArrayTaskList arrayTaskList) {

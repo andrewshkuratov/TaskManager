@@ -38,7 +38,7 @@ public class EditTaskController {
         }
         arrayTaskList.changeTask(index - 1, task);
         TaskIO.writeText(arrayTaskList, new File(src));
-        logger.log(Level.INFO, "Task edited");
+//        logger.log(Level.INFO, "Task edited");
     }
 
     private void repeatMenuOptions(Task task) throws IOException {

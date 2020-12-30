@@ -32,8 +32,9 @@ public class Tasks implements Serializable {
 
             LocalDateTime next = task.nextTimeAfter(start);
             if (next == null) {
-                continue;
+                break;
             }
+
             if (next.isAfter(end)) {
                 continue;
             }

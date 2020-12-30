@@ -24,7 +24,7 @@ public class AddTaskController {
         TaskIO.readText(arrayTaskList, new File(src));
         arrayTaskList.add(createTask());
         TaskIO.writeText(arrayTaskList, new File(src));
-        logger.log(Level.INFO, "Task added");
+//        logger.log(Level.INFO, "Task added");
     }
 
     private Task createTask() {

@@ -13,7 +13,7 @@ public class MainView {
     Scanner scanner = new Scanner(System.in);
 
     public void launch() throws IOException {
-        logger.log(Level.INFO, "Program launched");
+//        logger.log(Level.INFO, "Program launched");
         printMenu();
     }
 
@@ -27,10 +27,10 @@ public class MainView {
         System.out.println("6. Exit");
         int value = scanner.nextInt();
         System.out.println(value);
-        logger.log(Level.INFO, "User option" + value);
+//        logger.log(Level.INFO, "User option" + value);
         if (value == 6) {
             System.out.println("Thank you for using this app!");
-            logger.log(Level.INFO, "Program finished");
+//            logger.log(Level.INFO, "Program finished");
         } else {
             viewController.choosenOption(value);
             printMenu();

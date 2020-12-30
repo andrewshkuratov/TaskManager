@@ -20,6 +20,6 @@ public class PrintTaskController {
             System.out.println(i + ". " + task);
             i++;
         }
-        logger.log(Level.INFO, "Tasks printed");
+//        logger.log(Level.INFO, "Tasks printed");
     }
 }

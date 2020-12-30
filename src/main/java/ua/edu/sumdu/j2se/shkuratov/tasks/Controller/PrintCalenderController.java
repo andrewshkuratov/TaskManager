@@ -24,22 +24,23 @@ public class PrintCalenderController {
         TaskIO.readText(arrayTaskList, new File(src));
         LocalDateTime dateTime = inputStartTime("Input task start date of format yyyy-MM-dd HH:mm : ");
         LocalDateTime endDateTime = inputStartTime("Input task end date of format yyyy-MM-dd HH:mm : ");
-        if (dateTime != null && endDateTime != null && dateTime.isAfter(endDateTime)) {
+        if (dateTime == null || endDateTime == null || dateTime.isAfter(endDateTime)) {
             System.out.println("Invalid time entered");
             return;
         }
         SortedMap<LocalDateTime, Set<Task>> calendar = Tasks.calendar(arrayTaskList, dateTime, endDateTime);
         Iterator iterator = calendar.keySet().iterator();
         while (iterator.hasNext()) {
-            System.out.println("Worked");
             LocalDateTime key = (LocalDateTime) iterator.next();
             System.out.println(key);
             Set<Task> value = (Set<Task>) calendar.get(key);
             for (Task t : value) {
+                if (key.isAfter(t.getEndTime())) {
+                    return;
+                }
                 System.out.println(value);
             }
         }
-        logger.log(Level.INFO, "Calendar printed");
     }
 
     private LocalDateTime inputStartTime(String data) {
