@@ -10,11 +10,8 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class EditTaskController {
-    private Logger logger;
     private final Scanner scanner = new Scanner(System.in);
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private final ArrayTaskList arrayTaskList = new ArrayTaskList();
@@ -22,7 +19,7 @@ public class EditTaskController {
     public void chooseTask(String src) throws IOException {
         TaskIO.readText(arrayTaskList, new File(src));
         System.out.println("Choose index of task you want to edit");
-        int index = scanner.nextInt();
+        int index = Integer.parseInt(scanner.nextLine());
         if (index > arrayTaskList.size() || index <= 0) {
             System.out.println(index);
             System.out.println(arrayTaskList.size());
@@ -38,7 +35,6 @@ public class EditTaskController {
         }
         arrayTaskList.changeTask(index - 1, task);
         TaskIO.writeText(arrayTaskList, new File(src));
-//        logger.log(Level.INFO, "Task edited");
     }
 
     private void repeatMenuOptions(Task task) throws IOException {
@@ -64,7 +60,7 @@ public class EditTaskController {
         System.out.println("4. Set time interval and end time");
         System.out.println("5. Cancel editing");
 
-        int value = scanner.nextInt();
+        int value = Integer.parseInt(scanner.nextLine());
         System.out.println(value);
         chosenNonRepeatOption(value, task);
     }
@@ -126,7 +122,7 @@ public class EditTaskController {
 
     private String changeTitle() {
         System.out.print("Enter new title : ");
-        return scanner.next();
+        return scanner.nextLine();
     }
 
     private LocalDateTime changeTime(String message) {
@@ -142,6 +138,6 @@ public class EditTaskController {
 
     private int setInterval() {
         System.out.println("Enter time interval");
-        return scanner.nextInt();
+        return Integer.parseInt(scanner.nextLine());
     }
 }

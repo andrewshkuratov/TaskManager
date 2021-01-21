@@ -11,11 +11,8 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class PrintCalenderController {
-    private Logger logger;
+public class PrintCalendarController {
     private final Scanner scanner = new Scanner(System.in);
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 

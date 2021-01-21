@@ -4,18 +4,14 @@ import ua.edu.sumdu.j2se.shkuratov.tasks.Model.ArrayTaskList;
 import ua.edu.sumdu.j2se.shkuratov.tasks.Model.Task;
 import ua.edu.sumdu.j2se.shkuratov.tasks.Model.TaskIO;
 
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class AddTaskController {
-    private Logger logger;
     private final Scanner scanner = new Scanner(System.in);
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -24,14 +20,13 @@ public class AddTaskController {
         TaskIO.readText(arrayTaskList, new File(src));
         arrayTaskList.add(createTask());
         TaskIO.writeText(arrayTaskList, new File(src));
-//        logger.log(Level.INFO, "Task added");
     }
 
     private Task createTask() {
         System.out.println("Is your task repeating?");
         System.out.println("1. Yes");
         System.out.println("2. No");
-        int isRepeated = scanner.nextInt();
+        int isRepeated = Integer.parseInt(scanner.nextLine());
         switch (isRepeated) {
             case 1:
                 return repeatedTask();
